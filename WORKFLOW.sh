@@ -2,7 +2,15 @@
 # Marieke van Erp
 # 8 September 2013 
 
+# Generate factuality.csv from the FactBank 1.0 database:
+SELECT DISTINCT sentences.file, sentences.sentId, tml_event.eId, tml_event.eClass, fb_factValue.eText, fb_factValue.eId, tml_instance.tense, tml_instance.aspect, tml_instance.pos, tml_instance.polarity, fb_factValue.relSourceText, sentences.sent, fb_factValue.factValue INTO OUTFILE '/tmp/factuality.csv'
+FIELDS TERMINATED BY '\t' OPTIONALLY ENCLOSED BY '"' ESCAPED BY '\\' LINES TERMINATED BY '\n' FROM sentences JOIN tml_event ON (sentences.file = tml_event.file AND sentences.sentId = tml_event.sentId) JOIN fb_relSource ON (sentences.file = fb_relSource.file AND sentences.sentId = fb_relSource.sentId) JOIN fb_factValue ON (tml_event.file = fb_factValue.file AND tml_event.sentId = fb_factValue.sentId AND tml_event.eId = fb_factValue.eId) JOIN tml_instance ON (tml_event.file = tml_instance.file AND tml_event.eId = tml_instance.eId)
+
+# copy to your working directory
+cp '/tmp/factuality.csv' . 
+
 # Generate the feature vectors:
+# Note: factuality.csv is not included due to the FactBank data license.
 perl NWRFactualityCreateFeatureVectors.pl > NWRFactualityFeatureVectors.csv
 
 # You get better results without the nested sources
