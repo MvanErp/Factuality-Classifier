@@ -15,7 +15,7 @@ use List::MoreUtils qw(uniq);
 use Lingua::EN::Tokenizer::Offsets qw/token_offsets get_tokens/; 
 
 # Print the CSV header line for Weka
-print "My_id,event text,eventType,tense,aspect,pos,polarity,RelSource,RelSourceLevel,w-4,w-3,w-2,w-1,e,w+1,w+2,factvalue\n" ; 
+#print "My_id,event text,eventType,tense,aspect,pos,polarity,RelSource,RelSourceLevel,w-4,w-3,w-2,w-1,e,w+1,w+2,factvalue\n" ; 
  
 # Open the factuality annotations file and loop through it 
 open FILE, "factuality.csv" ;
