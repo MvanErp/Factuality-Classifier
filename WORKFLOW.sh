@@ -38,7 +38,9 @@ mallet-2.0.7/bin/mallet train-classifier --trainer MaxEnt --input FactBank.vecto
 ################
 
 # Take a kaf file as input and generate the Mallet format (ID	LABEL	DATA)
-perl KAFToMalletInputFactuality.pl FILE.kaf > FILE.tab
+perl NAFToMalletInputFactuality.pl FILE.naf > FILE.tab
+# KAF will soon be deprecated, but if you still have a KAF file, you can use this command
+#perl KAFToMalletInputFactuality.pl FILE.kaf > FILE.tab
 
 # Classify the instances from the input file  
 mallet-2.0.7/bin/csv2classify --input FILE.tab --output FILE.output --classifier MyMaxEntFactuality.classifier
@@ -48,4 +50,9 @@ mallet-2.0.7/bin/csv2classify --input FILE.tab --output FILE.output --classifier
 perl sortMalletOutput.pl FILE.output > FILE.sorted
 
 # Read in output file as well as original KAF file and insert a factuality layer with factuality score, confidence and word (or term?) ID. 
-perl convertMalletToKAF.pl FILE.kaf FILE.sorted > FILE.factuality.kaf
+perl convertMalletToNAF.pl FILE.naf FILE.sorted > FILE.factuality.naf
+# KAF will soon be deprecated, but if you still have a KAF file, you can use this command
+#perl convertMalletToKAF.pl FILE.kaf FILE.sorted > FILE.factuality.kaf
+
+
+
