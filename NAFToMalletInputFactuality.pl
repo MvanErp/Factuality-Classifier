@@ -5,11 +5,19 @@ use XML::LibXML ;
 use Data::Dumper ;  
 use utf8::all ;
 use Scalar::MoreUtils qw(empty);
+use XML::LibXML::PrettyPrint ; 
 
 my $parser = XML::LibXML->new();
 	
 #my $doc = $parser->parse_file( 'newsreader_testset_20130409/100054B2-BBY1-JD34-P1B5.xml' );
 my $doc = $parser->parse_file( "-");
+
+# Print a temporary NAF file 
+open TEMP, ">temp.naf" ; 
+print TEMP XML::LibXML::PrettyPrint
+    -> new ( element => { compact => [qw/label/] } )
+    -> pretty_print($doc)
+    -> toString;
 
 my %words ; 
 my %sentWids ;
@@ -108,6 +116,7 @@ for my $sentence (sort {$a <=> $b } keys %sentWids)
 		else { $window = $words{$wids[$events-4]}." ".$words{$wids[$events-3]}." ".$words{$wids[$events-2]}." ".$words{$wids[$events-1]}." ".$words{$wids[$events]} ; }
 		if($events == (scalar(@wids) - 2 )) { $window = $window." ".$words{$wids[$events+1]} ;}
 		elsif($events != (scalar(@wids) - 1 )) { $window = $window." ".$words{$wids[$events+1]}." ".$words{$wids[$events+2]} ;}
+		$window =~ s/\s+/ /g; 
 		print $sentence."_".$wids[$events]."\tBOGUS\t".$window."\n" ;
 		}
 	}
