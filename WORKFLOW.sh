@@ -37,6 +37,9 @@ mallet-2.0.7/bin/mallet train-classifier --trainer MaxEnt --input FactBank.vecto
 #
 ################
 
+# Create a begin timestamp so we can log how long it takes to process a file
+perl beginTimestamp.pl
+
 # Take a kaf file as input and generate the Mallet format (ID	LABEL	DATA)
 perl NAFToMalletInputFactuality.pl FILE.naf > FILE.tab
 # KAF will soon be deprecated, but if you still have a KAF file, you can use this command
@@ -54,5 +57,6 @@ perl convertMalletToNAF.pl FILE.naf FILE.sorted > FILE.factuality.naf
 # KAF will soon be deprecated, but if you still have a KAF file, you can use this command
 #perl convertMalletToKAF.pl FILE.kaf FILE.sorted > FILE.factuality.kaf
 
-
+# Clean up the begin timestamp 
+rm begintimestamp.txt
 

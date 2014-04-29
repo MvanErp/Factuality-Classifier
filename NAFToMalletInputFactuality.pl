@@ -3,9 +3,11 @@
 use strict ; 
 use XML::LibXML ;
 use Data::Dumper ;  
-use utf8::all ;
+#use utf8::all ;
 use Scalar::MoreUtils qw(empty);
-use XML::LibXML::PrettyPrint ; 
+#use XML::LibXML::PrettyPrint ; 
+
+binmode STDOUT, ":utf8";
 
 my $parser = XML::LibXML->new();
 	
@@ -14,10 +16,11 @@ my $doc = $parser->parse_file( "-");
 
 # Print a temporary NAF file 
 open TEMP, ">temp.naf" ; 
-print TEMP XML::LibXML::PrettyPrint
-    -> new ( element => { compact => [qw/label/] } )
-    -> pretty_print($doc)
-    -> toString;
+print TEMP $doc->toString(1);
+# print TEMP XML::LibXML::PrettyPrint
+#     -> new ( element => { compact => [qw/label/] } )
+#     -> pretty_print($doc)
+#     -> toString;
 
 my %words ; 
 my %sentWids ;

@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# use non standard location for perl libraries
+export PERL5LIB=$PERL5LIB:/home/newsreader/opt/lib/perl5
+
+# Create a begin timestamp so we can log how long it takes to process a file
+perl beginTimestamp.pl
+
 # Convert NAF file to Mallet input file 
 perl NAFToMalletInputFactuality.pl > malletinput.tab
 
@@ -13,4 +19,4 @@ perl sortMalletOutput.pl malletoutput.txt > malletoutput.sorted
 perl convertMalletToNAF.pl temp.naf malletoutput.sorted 
 
 # Clean up
-rm temp.naf malletinput.tab malletoutput.txt  malletoutput.sorted
+rm temp.naf malletinput.tab malletoutput.txt malletoutput.sorted begintimestamp.txt
